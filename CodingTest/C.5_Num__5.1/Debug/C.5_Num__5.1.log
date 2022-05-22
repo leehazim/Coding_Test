@@ -1,0 +1,6 @@
+﻿  main.cpp
+D:\Github\Coding_Test\CodingTest\C.5_Num__5.1\main.cpp(13,13): warning C4101: 'Temp' :참조되지 않은 지역 변수입니다.
+D:\Github\Coding_Test\CodingTest\C.5_Num__5.1\main.cpp(58,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Github\Coding_Test\CodingTest\C.5_Num__5.1\main.cpp(59,25): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Github\Coding_Test\CodingTest\C.5_Num__5.1\main.cpp(83,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  C.5_Num__5.1.vcxproj -> D:\Github\Coding_Test\CodingTest\Debug\C.5_Num__5.1.exe
