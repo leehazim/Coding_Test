@@ -1,0 +1,4 @@
+﻿  main.cpp
+D:\Github\Coding_Test\CodingTest\C.6_Num_12\main.cpp(13,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Github\Coding_Test\CodingTest\C.6_Num_12\main.cpp(20,26): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  C.6_Num_12.vcxproj -> D:\Github\Coding_Test\CodingTest\Debug\C.6_Num_12.exe
