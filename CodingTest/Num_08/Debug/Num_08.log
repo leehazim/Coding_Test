@@ -1,7 +1,18 @@
 ﻿  main.cpp
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(132,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(175,20): error C2561: 'EvenOddMerge': 함수는 값을 반환해야 합니다.
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(174): message : 'EvenOddMerge' 선언을 참조하십시오.
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(179,39): error C2079: 'tails'은(는) 정의되지 않은 class 'std::array<std::shared_ptr<ListNode1<int>>,2>'을(를) 사용합니다.
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(179,81): error C2440: '초기화 중': 'initializer list'에서 'int'(으)로 변환할 수 없습니다.
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(179,47): message : 이니셜라이저에 요소가 너무 많습니다.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xutility(149,56): error C2661: 'ListNode1<int>::ListNode1': 오버로드된 함수에서 2개의 인수를 사용하지 않습니다.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\memory(2010): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Construct_in_place<_Ty,int,nullptr>(_Ty &,int &&,nullptr &&) noexcept(false)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=ListNode1<int>
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\memory(2729): message : 컴파일되는 함수 템플릿 인스턴스화 'std::_Ref_count_obj2<ListNode1<int>>::_Ref_count_obj2<_Ty,nullptr>(_Ty &&,nullptr &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\memory(2730): message : 컴파일되는 함수 템플릿 인스턴스화 'std::_Ref_count_obj2<ListNode1<int>>::_Ref_count_obj2<_Ty,nullptr>(_Ty &&,nullptr &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=int
+          ]
+D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(226): message : 컴파일되는 함수 템플릿 인스턴스화 'std::shared_ptr<ListNode1<int>> std::make_shared<ListNode1<int>,int,nullptr>(int &&,nullptr &&)'에 대한 참조를 확인하세요.
