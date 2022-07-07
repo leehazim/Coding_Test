@@ -1,18 +1,2 @@
 ﻿  main.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xutility(149,56): error C2661: 'ListNode1<int>::ListNode1': 오버로드된 함수에서 2개의 인수를 사용하지 않습니다.
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\memory(2010): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Construct_in_place<_Ty,int,nullptr>(_Ty &,int &&,nullptr &&) noexcept(false)'에 대한 참조를 확인하세요.
-          with
-          [
-              _Ty=ListNode1<int>
-          ]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\memory(2729): message : 컴파일되는 함수 템플릿 인스턴스화 'std::_Ref_count_obj2<ListNode1<int>>::_Ref_count_obj2<_Ty,nullptr>(_Ty &&,nullptr &&)'에 대한 참조를 확인하세요.
-          with
-          [
-              _Ty=int
-          ]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\memory(2730): message : 컴파일되는 함수 템플릿 인스턴스화 'std::_Ref_count_obj2<ListNode1<int>>::_Ref_count_obj2<_Ty,nullptr>(_Ty &&,nullptr &&)'에 대한 참조를 확인하세요.
-          with
-          [
-              _Ty=int
-          ]
-D:\Github\Coding_Test\CodingTest\Num_08\main.cpp(226): message : 컴파일되는 함수 템플릿 인스턴스화 'std::shared_ptr<ListNode1<int>> std::make_shared<ListNode1<int>,int,nullptr>(int &&,nullptr &&)'에 대한 참조를 확인하세요.
+  Num_08.vcxproj -> D:\Github\Coding_Test\CodingTest\Debug\Num_08.exe

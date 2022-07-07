@@ -16,16 +16,16 @@ struct ListNode {
 };
 
 template<typename __type>
-struct ListNode1{
+struct ListNode_shared {
 	__type data;
-	shared_ptr<ListNode1<__type>> next;
+	shared_ptr<ListNode_shared<__type>> next;
 };
 
 template<typename __type>
 class List {
 public:
 	List() {
-		_head = new ListNode<int>();
+		_head = new ListNode<__type>();
 		_tail = nullptr;
 		temp = nullptr;
 	}
@@ -38,6 +38,18 @@ public:
 			}
 		}
 		if (_tail != nullptr) _tail = nullptr;
+	}
+
+	void PushFront(__type data) {
+		temp = new ListNode<__type>();
+		temp->data = data;
+
+		if (_head->next == nullptr) {
+			PushBack(data);
+			return;
+		}
+		temp->next = _head->next;		
+		_head->next = temp;
 	}
 	
 	void PushBack(__type data) {
@@ -96,7 +108,7 @@ public:
 	}
 
 	void MergeOdd() {
-		ListNode<int>* temp1, * temp2;
+		ListNode<__type>* temp1, * temp2;
 		temp = _head->next;
 		while (temp) {
 			temp1 = temp->next;
@@ -124,43 +136,49 @@ public:
 // 피벗 어떤 정수 k를 기준으로 k보다 큰 키를 오른쪽으로
 // k보다 작은 키를 왼쪽으로 배치하는 과정을 피버팅이라 한다.
 // 단순연결 리스트와 정수 k가 주어졌을 때 k를 기준으로 리스트를 피버팅 하는 함수
+	// 공간복잡도를 희생해서 만든 알고리즘
+	void Pivoting(__type k) {
+		ListNode<__type>* small, *smallTmp;
+		ListNode<__type>* big, *bigTmp;
+		ListNode<__type>* same, *sameTmp;
+		small = new ListNode<__type>();
+		big = new ListNode<__type>();
+		same = new ListNode<__type>();
 
-	void Pivoting(int k) {
-		temp = _head;
-		// 피벗으로 정할 값의 노드를 찾는다.
+		temp = _head->next;
 		while (temp) {
-			if (temp->data == k)break;
+			if (temp->data == k) {
+				sameTmp = same;
+				while (sameTmp->next) same = same->next;
+				sameTmp->next = new ListNode<__type>();
+				sameTmp->next->data = temp->data;
+				sameTmp->next->next = nullptr;
+			}
+			else if (temp->data > k) {
+				bigTmp = big;
+				while (bigTmp->next) { bigTmp = bigTmp->next; }
+				bigTmp->next = new ListNode<__type>();
+				bigTmp->next->data = temp->data;
+				bigTmp->next->next = nullptr;
+			}
+			else {
+				smallTmp = small;
+				while (smallTmp->next) { smallTmp = smallTmp->next; }
+				smallTmp->next = new ListNode<__type>();
+				smallTmp->next->data = temp->data;
+				smallTmp->next->next = nullptr;
+			}
 			temp = temp->next;
 		}
-		// 노드가 없을시 끝낸다.
-		if(temp == nullptr) return;
-		
-		// 피벗다음 노드와 헤드부터 값을 비교한다.
-		ListNode<__type>* pivot = temp;
-		ListNode<__type>* first_half = _head, *first_half_next = _head->next;
-		ListNode<__type>* second_half = temp->next, * second_half_next = temp->next->next;
+		temp = _head;
 
-		while (true) {
-			while (first_half_next->data < pivot->data) {
-				// 대상 노드보다 전 노드를 가지고 있는다.
-				first_half = first_half->next;
-				first_half_next = first_half_next->next;
-			}
-			while (second_half_next->data < pivot->data) {
-				second_half_next = second_half_next->next;
-				second_half = second_half->next;
-			}
-
-			if (!second_half_next || !first_half_next) return;
-
-			ListNode<__type>* tmp = second_half_next->next;
-			first_half->next = second_half_next;
-			second_half_next->next = first_half_next->next;
-			first_half_next->next = tmp;
-			second_half->next = first_half_next;
-		}
-		
+		temp->next = small->next;
+		while (temp->next) temp = temp->next;
+		temp->next = same->next;
+		while (temp->next) temp = temp->next;
+		temp->next = big->next;
 	}
+
 private:
 	ListNode<__type>* _head;
 	ListNode<__type>* _tail;
@@ -168,25 +186,16 @@ private:
 };
 
 int main(void) {
-	List<int> li;
-	li.PushBack(20);
-	li.PushBack(50);
-	li.PushBack(100);
-	li.PushBack(130);
-	li.PushBack(30);
-	li.PushBack(60);
-	li.PushBack(40);
-	li.PushBack(0);
-	li.PushBack(70);
-	li.PushBack(80);
-	li.PushBack(90);
-	li.PushBack(110);
-	li.PushBack(120);
+	List<int> li, li2;
+	li.PushFront(4);
+	li.PushFront(1);
+	li.PushFront(3);
+	li2.PushFront(9);
+	li2.PushFront(0);
+	li2.PushFront(7);
 	li.PrintNode();
-	std::cout << std::endl;
-	li.Pivoting(40);
-	li.PrintNode();
-
+	cout << endl;
+	li2.PrintNode();
 	return 0;
 }
 
@@ -220,54 +229,92 @@ int main(void) {
 //}
 
 // 책에서의 짝수 홀수 병합 알고리즘
-shared_ptr<ListNode1<int>> EvenOddMerge(const std::shared_ptr<ListNode1<int>>& L) {
-	if (L == nullptr) return L;
+//shared_ptr<ListNode1<int>> EvenOddMerge(const std::shared_ptr<ListNode1<int>>& L) {
+//	if (L == nullptr) return L;
+//
+//	auto even_dummy_head = make_shared<ListNode1<int>>(0, nullptr);
+//	auto odd_dummy_head = make_shared<ListNode1<int>>(0, nullptr);
+//	std::array<std::shared_ptr<ListNode1<int>>, 2> tails = { even_dummy_head,odd_dummy_head };
+//	int turn = 0;
+//	for (auto iter = L; iter; iter = iter->next) {
+//		tails[turn]->next = iter;
+//		tails[turn] = tails[turn]->next;
+//		turn ^= 1;
+//	}
+//	tails[1]->next = nullptr;
+//	tails[0]->next = odd_dummy_head->next;
+//	return even_dummy_head->next;
+//}
+//
+//shared_ptr<ListNode1<int>> ReverseSubList(shared_ptr<ListNode1<int>> L, int start, int finish) {
+//	auto dummy_head = make_shared<ListNode1<int>>(0, L);
+//	auto sublist_head = dummy_head;
+//	int k = 1;
+//	while (k++ < start) {
+//		sublist_head = sublist_head->next;
+//	}
+//	auto sublist_iter = sublist_head->next;
+//	while (start++ < finish) {
+//		auto temp = sublist_iter->next;
+//		sublist_iter->next = temp->next;
+//		temp->next = sublist_head->next;
+//		sublist_head->next = temp;
+//	}
+//	return dummy_head->next;
+//}
+//
+////  Num 11 회문인지 확인하는 알고리즘
+//bool IsLinkedListAPalindrome(shared_ptr<ListNode1<int>>L) {
+//	shared_ptr<ListNode1<int>>slow = L, fast = L;
+//	while (fast && fast->next) {
+//		fast = fast->next->next;
+//		slow = slow->next;
+//	}
+//	// list의 노드 개수가 몇개인지 파악하는 코드 추가 후 그 개수를 매개변수로 넘기자.
+//
+//	auto first_half_iter = L, second_half_iter = ReverseSubList(slow, 0, 10);
+//	while (second_half_iter && first_half_iter) {
+//		if (second_half_iter->data != first_half_iter->data) return false;
+//		second_half_iter = second_half_iter->next;
+//		first_half_iter = first_half_iter->next;
+//	}
+//	return true;
+//}
 
-	auto even_dummy_head = make_shared<ListNode1<int>>(0, nullptr);
-	auto odd_dummy_head = make_shared<ListNode1<int>>(0, nullptr);
-	std::array<std::shared_ptr<ListNode1<int>>, 2> tails = { even_dummy_head,odd_dummy_head };
-	int turn = 0;
-	for (auto iter = L; iter; iter = iter->next) {
-		tails[turn]->next = iter;
-		tails[turn] = tails[turn]->next;
-		turn ^= 1;
-	}
-	tails[1]->next = nullptr;
-	tails[0]->next = odd_dummy_head->next;
-	return even_dummy_head->next;
-}
+/// <summary>
+/// Num 12  피벗 구현하기
+/// </summary>
+//shared_ptr<ListNode_shared<int>> ListPivoting(const shared_ptr<ListNode_shared<int>>& l, int x) {
+//	shared_ptr<ListNode_shared<int>>	less_head(new ListNode_shared<int>),
+//										equal_head(new ListNode_shared<int>),
+//										greater_head(new ListNode_shared<int>);
+//
+//	shared_ptr<ListNode_shared<int>>	less_iter = less_head,
+//										equal_iter = equal_head,
+//										greater_iter = greater_head;
+//		
+//	shared_ptr<ListNode_shared<int>> iter = l;
+//	while (iter) {
+//		// 추가 작업AppendNode(&iter, iter->data < x ? &less_iter : iter->data == x ? &equal_iter : &greater_iter);
+//	}
+//	greater_iter->next = nullptr;
+//	equal_iter->next = greater_head->next;
+//	less_iter->next = equal_head->next;
+//	return less_head->next;
+//}
 
-shared_ptr<ListNode1<int>> ReverseSubList(shared_ptr<ListNode1<int>> L, int start, int finish) {
-	auto dummy_head = make_shared<ListNode1<int>>(0, L);
-	auto sublist_head = dummy_head;
-	int k = 1;
-	while (k++ < start) {
-		sublist_head = sublist_head->next;
-	}
-	auto sublist_iter = sublist_head->next;
-	while (start++ < finish) {
-		auto temp = sublist_iter->next;
-		sublist_iter->next = temp->next;
-		temp->next = sublist_head->next;
-		sublist_head->next = temp;
+// Num 13 연결리스트를 정수로 사용해서 덧셈하기
+shared_ptr<ListNode_shared<int>> AddTwoNumbers(shared_ptr<ListNode_shared<int>> L1,
+											   shared_ptr<ListNode_shared<int>> L2) {
+	shared_ptr<ListNode_shared<int>> dummy_head(new ListNode_shared<int>);
+	auto place_iter = dummy_head;
+	int carry = 0;
+	while (L1 || L2 || carry) {
+		int val = carry + (L1 ? L1->data : 0) + (L2 ? L2->data : 0);
+		L1 = L1 ? L1->next : nullptr;
+		L2 = L2 ? L2->next : nullptr;
+		place_iter->next = make_shared<ListNode_shared<int>>(val % 10, nullptr);
+		carry = val / 10, place_iter = place_iter->next;
 	}
 	return dummy_head->next;
-}
-
-// 회문인지 확인하는 알고리즘
-bool IsLinkedListAPalindrome(shared_ptr<ListNode1<int>>L) {
-	shared_ptr<ListNode1<int>>slow = L, fast = L;
-	while (fast && fast->next) {
-		fast = fast->next->next;
-		slow = slow->next;
-	}
-	// list의 노드 개수가 몇개인지 파악하는 코드 추가 후 그 개수를 매개변수로 넘기자.
-
-	auto first_half_iter = L, second_half_iter = ReverseSubList(slow, 0, 10);
-	while (second_half_iter && first_half_iter) {
-		if (second_half_iter->data != first_half_iter->data) return false;
-		second_half_iter = second_half_iter->next;
-		first_half_iter = first_half_iter->next;
-	}
-	return true;
 }
